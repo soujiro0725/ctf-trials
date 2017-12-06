@@ -1,0 +1,4 @@
+#!/home/soichi/bin/radare2
+program=./zwiebel2
+stdin="AAAAAAAAAA"
+stdout=

@@ -1,5 +1,25 @@
 #+title: SECCON2017
 
+* liveoverflow
+** Internetwache CTF 2016
+https://github.com/internetwache/Internetwache-CTF-2016
+
+public key and private key are exponent and modulus of mathematical algorithms
+
+factordb: database of factorization
+http://www.factordb.com/
+
+#+BEGIN_SRC shell-script
+$ openssl rsa -pubin -inform PEM -text -noout -in bob.pub
+Public-Key: (228 bit)
+Modulus:
+    0d:56:4b:97:8f:9d:23:35:04:95:8e:ed:8b:74:43:
+    73:28:1e:d1:41:8b:29:f1:ec:fa:80:93:d8:cf
+Exponent: 65537 (0x10001)
+$
+#+END_SRC
+
+
 * SECCON2017
 ** Vigenere3d
 ----- Vigenere3d.py
@@ -25,6 +45,7 @@ POR4dnyTLHBfwbxAAZhe}}ocZR3Cxcftw9
 
 
 $ python Vigenere3d.py SECCON{AAAAAAAAAAAAAAAAAAAAAAAAAA} BBBBBBBBBBBBBB
+$ python Vigenere3d.py SECCON{AAAAAAAAAAAAAAAAAAAAAAAAAA} 12345678901234
 
 #+BEGIN_SRC shell-script
 

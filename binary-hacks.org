@@ -1,6 +1,7 @@
-#+:title SECCON2017
+#+title: SECCON2017
 
-* Vigenere3d
+* SECCON2017
+** Vigenere3d
 ----- Vigenere3d.py
 import sys
 def _l(idx, s):
@@ -29,7 +30,7 @@ $ python Vigenere3d.py SECCON{AAAAAAAAAAAAAAAAAAAAAAAAAA} BBBBBBBBBBBBBB
 
 #+END_SRC
 
-* Run me!
+** Run me!
 -----  RunMe.py
 import sys
 sys.setrecursionlimit(99999)
@@ -38,34 +39,33 @@ def f(n):
 print "SECCON{" + str(f(11011))[:32] + "}"
 -----
 
-* putchar music
+** putchar music
 This one line of C program works on Linux Desktop. What is this movie's title? 
 Please answer the flag as SECCON{MOVIES_TITLE}, replace all alphabets with capital letters, and spaces with underscores.
 
 main(t,i,j){unsigned char p[]="###<f_YM\204g_YM\204g_Y_H #<f_YM\204g_YM\204g_Y_H #+-?[WKAMYJ/7 #+-?[WKgH #+-?[WKAMYJ/7hk\206\203tk\\YJAfkkk";for(i=0;t=1;i=(i+1)%(sizeof(p)-1)){double x=pow(1.05946309435931,p[i]/6+13);for(j=1+p[i]%6;t++%(8192/j);)putchar(t>>5|(int)(t*x));}}
 
-* Baby Stack
+** Baby Stack
 Can you do a traditional stack attack?
 
 Host : baby_stack.pwn.seccon.jp
 Port : 15285
 
-** memo
+*** memo
 main.main　という関数が大きく重要そう
    
-
-* Qubic Rube
+** Qubic Rube
 Please continue to solve Rubic's Cube and read QR code.
 http://qubicrube.pwn.seccon.jp:33654/
 
-* hash_burger
+** hash_burger
 "Hash burger" for burger shop management!
 Flag is in /home/hash_burger/flag.
 
 Host : hash_burger.pwn.seccon.jp
 Port : 9999
 hash_burger-af75f859c355b45b0deee710ad4ce0dc6a2db9d7128431e1d380f34defdaad21.zip (pass:seccon2017)
-* SHA-1 is dead
+** SHA-1 is dead
 http://sha1.pwn.seccon.jp/
 Upload two files satisfy following conditions:
 
@@ -73,21 +73,21 @@ file1 != file2
 SHA1(file1) == SHA1(file2)
 2017kb < sizeof(file1) < 2018kb
 2017kb < sizeof(file2) < 2018kb
-* Powerful_Shell
+** Powerful_Shell
 Crack me.
 powerful_shell.ps1-1fb3af91eafdbebf3b3efa3b84fcc10cfca21ab53db15c98797b500c739b0024
-* Election
+** Election
 Today is the vote day.
 Who would you like to be chairman?
 
 Host : election.pwn.seccon.jp
 Port : 28349
 election-9724a8d0a6c9ccb131200ec96752c61c0e6734cd9e1bb7b1958f8c88c0bd78fa.zip(pass:seccon2017)
-* qlSRF
+** qlSRF
 The root reply the flag to your mail address if you send a mail that subject is "give me flag" to root.
 http://sqlsrf.pwn.seccon.jp/sqlsrf/
 
-* logsearch 
+** logsearch 
 
 10/Dec/2017:05:13:24 +0900	GET	/etc/passwd/jservdocs/	404
 10/Dec/2017:05:13:24 +0900	GET	/etc/passwd/test/jsp/declaration/IntegerOverflow.jsp	404
@@ -127,8 +127,7 @@ http://sqlsrf.pwn.seccon.jp/sqlsrf/
 -> x ?
 
 
-
-* Man-in-the-middle on SECP384R1
+** Man-in-the-middle on SECP384R1
 Steal the conversation between dev0 and dev1.
 Host : mitm.pwn.seccon.jp
 Port : 8000
@@ -136,18 +135,17 @@ Port : 8000
 sample code for MITM is below.
 exploit-5b67f6c7a3a7b84c8e36252773a69e9ce9818f599c63583bde50cce2301f7286.py
 
-* printf machine
+** printf machine
 Crack me.
 printf_machine-05943cfba938e4ab7f52f096e35f6197c9308a6c56c83d75812adebe21671f9a.zip(pass;seccon2017)
 
-* Ps and Qs
+** Ps and Qs
 Decrypt it.
 update: we fixed the flag, please try to submit again.
 
 psqs1-0dd2921c9fbdb738e51639801f64164dd144d0771011a1dc3d55da6fbcb0fa02.zip (pass:seccon2017)
 
-
-* vm_no_fun
+** vm_no_fun
 You're waiting for a shell...
 A shell that will take you far away...
 
@@ -155,7 +153,7 @@ Host : vm_no_fun.pwn.seccon.jp
 Port : 30203
 vm_no_fun-a2e1004a46f52e5628b10220af52f2f0d2cdd0ef14ef9b09860dd0de84a797fa.zip
 
-* Theory of Relativity
+** Theory of Relativity
 Part two(The Interpreter) may be harder than this one.
 
 Here is a bytecode interpreter. It executes your program and shows the output. In fact, I prepared this to run an event named "slowest program wins!" A program with longest elapsed time wins a gift. That's all.
@@ -166,20 +164,20 @@ For your information, the server is Ubuntu 16.04.3 with node.js 8.9.1.
 
 http://relativity.pwn.seccon.jp:5000/
 relativity_and_interpreter-bbea97c5160f8fd11b084c5736c8db0c93653fd0028c01d3372c1cd9ecab6455.tgz
-* The Interpreter
+** The Interpreter
 Part one(Theory of Relativity) seems easier, but you can try these independently.
 
 It might be a cliche for the second part, but here it is: read the /flag.txt! For your information, the server is Ubuntu 16.04.3 with node.js 8.9.1.
 
 http://interpreter.pwn.seccon.jp:5000/
 relativity_and_interpreter-bbea97c5160f8fd11b084c5736c8db0c93653fd0028c01d3372c1cd9ecab6455.tgz
-* video_player
+** video_player
 Is my video player good enough??
 
 Host : video_player.pwn.seccon.jp
 Port : 7777
 video_player-45f734c492c2b9f9a0f8d7e6ffe4656a11e69270c05eabfc215843b65dd452cb.zip (pass:seccon2017)
-* Remote debugging of a micro computer
+** Remote debugging of a micro computer
 
 Connect to the server and read "word.txt" on current directory.
 $ echo '$g#67+' | nc micro.pwn.seccon.jp 10000
@@ -190,10 +188,10 @@ Short interval requests will be also ignored. (in several seconds)
 
 ---- information ----
 Reference:
-** About SOP
+*** About SOP
 https://www.slideshare.net/kozossakai/possibility-of-arbitrary-code-execution-by-steporiented-programming
 
-** Assembly samples for many architectures
+*** Assembly samples for many architectures
 http://kozos.jp/books/asm/cross-gcc494-v1.0.zip
 
 See the assembly samples.
@@ -205,7 +203,7 @@ See the sample programs running on GDB simulator.
 $ cd cross-gcc494/exec
 $ ls *.d
 
-** Files of the old server using SOP to solve it
+*** Files of the old server using SOP to solve it
 (at SECCON2016 final competition)
 
 - Information for the server
@@ -216,20 +214,20 @@ http://kozos.jp/seccon/2016/final/gdb-server/index.html
 
 - Files for answer
 http://kozos.jp/seccon/2016/final/gdb-server/answer.zip
-* Simon and Speck Block Ciphers
+** Simon and Speck Block Ciphers
 https://eprint.iacr.org/2013/404.pdf
 Simon_96_64, ECB, key="SECCON{xxxx}", plain=0x6d564d37426e6e71, cipher=0xbb5d12ba422834b5
-* z80
+** z80
 Reverse it.
 BuggyCPUBoard-82e40efd036ae8e87e149de07e6b99f5e01e389a537bf1d630b5af84d8f2b10a.ino
 Pictures.tar.gz
-* Online candy store
+** Online candy store
 I have opened an online candy store.
 
 Host : lazenca0x0.pwn.seccon.jp
 Port : 9999
 Lazenca.0x0-9374845c01384f5fc9efdce81437697499640db78523509906f315a1bed5cb3d.zip (pass:seccon2017)
-* Secure KeyManager
+** Secure KeyManager
 I have developed a very very secure key manager!
 The key should never leak.
 Have a secure day :)
@@ -237,16 +235,16 @@ Have a secure day :)
 Host : secure_keymanager.pwn.seccon.jp
 Port : 47225
 secure_keymanager-f9d02e8a1149ff866cad10f001e8f23803bcac3c42ed7ffdcbe50da40e8afd12.zip(pass:seccon2017)
-* broadcast
+** broadcast
 Host : broadcast.pwn.seccon.jp
 Port : 8888
 
 My company developed broadcast protocol for our private customers to announce news for each other.
-* Very smooth
+** Very smooth
 Decrypt index.html from PCAP.
 Please, submit the flag in the format: "SECCON{" + Answer + "}"
-** Answer is written in index.html
+*** Answer is written in index.html
 very_smooth_36c055008b945516b9c17e2ecce1c582c184b57c2945bbffba20372a8f9a3449.zip
-* automatic_door
+** automatic_door
 Get shell, and execute /flag_x
 http://automatic_door.pwn.seccon.jp/0b503d0caf712352fc200bc5332c4f95/

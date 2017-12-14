@@ -2,6 +2,7 @@
 
 * liveoverflow
 ** Internetwache CTF 2016
+https://www.youtube.com/watch?v=bAlF22mIYNk
 https://github.com/internetwache/Internetwache-CTF-2016
 
 public key and private key are exponent and modulus of mathematical algorithms
@@ -18,6 +19,11 @@ Modulus:
 Exponent: 65537 (0x10001)
 $
 #+END_SRC
+
+** rhme2 (crypto 200)					    :crypto:hardware:
+
+https://www.youtube.com/watch?v=sYCzu04ftaY
+
 
 
 * SECCON2017

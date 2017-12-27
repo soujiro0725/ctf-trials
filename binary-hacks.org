@@ -53,6 +53,57 @@ ret = __builtin_return_address(0);
   }
 #+END_SRC
 
+
+*** how to find "/bin/sh" in libc
+
+#+BEGIN_SRC shell-script
+strings -a -t x /lib/i386-linux-gnu/libc-2.23.so |grep "/bin/sh"
+#+END_SRC
+then, you get the offset to the command
+
+#+BEGIN_SRC shell-script
+gef➤  info proc map
+process 10659         
+Mapped address spaces:
+                                             
+        Start Addr   End Addr       Size     Offset objfile
+         0x8048000  0x8049000     0x1000        0x0 /home/gsx/Projects/ctf-trials/liveoverflow/stack6/stack6
+         0x8049000  0x804a000     0x1000        0x0 /home/gsx/Projects/ctf-trials/liveoverflow/stack6/stack6
+         0x804a000  0x806b000    0x21000        0x0 [heap]                                                           
+        0xb7e08000 0xb7fb8000   0x1b0000        0x0 /lib/i386-linux-gnu/libc-2.23.so                                  
+        0xb7fb8000 0xb7fba000     0x2000   0x1af000 /lib/i386-linux-gnu/libc-2.23.so                                  
+        0xb7fba000 0xb7fbb000     0x1000   0x1b1000 /lib/i386-linux-gnu/libc-2.23.so                                  
+        0xb7fbb000 0xb7fbe000     0x3000        0x0                                                                   
+        0xb7fd6000 0xb7fd8000     0x2000        0x0                                                                   
+        0xb7fd8000 0xb7fda000     0x2000        0x0 [vvar]                                                            
+        0xb7fda000 0xb7fdb000     0x1000        0x0 [vdso]                                                            
+        0xb7fdb000 0xb7ffd000    0x22000        0x0 /lib/i386-linux-gnu/ld-2.23.so                                    
+        0xb7ffd000 0xb7ffe000     0x1000        0x0                                                                   
+        0xb7ffe000 0xb7fff000     0x1000    0x22000 /lib/i386-linux-gnu/ld-2.23.so                                    
+        0xb7fff000 0xb8000000     0x1000    0x23000 /lib/i386-linux-gnu/ld-2.23.so                                    
+        0xbffdf000 0xc0000000    0x21000        0x0 [stack]                                                           
+gef➤  find 0xb7e08000, +99999999, "/bin/sh"                                                                           
+0xb7f639ab                                                                                                            
+warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.                                 
+1 pattern found.                                                                                                      
+gef➤  find 0xb7e08000, +9999999, "/bin/sh"                                                                            
+0xb7f639ab                                                                                                            
+warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.                                 
+1 pattern found.                                                                                                      
+gef➤  x/s 0xb7e08000+15b9abs                                                                                          
+Invalid number "15b9abs".                                                                                             
+gef➤  x/s 0xb7e08000+0x15b9abs                                                                                        
+Invalid number "0x15b9abs".                                                                                           
+gef➤  x/s 0xb7e08000+0x15b9ab                                                                                         
+0xb7f639ab:     "/bin/sh"                                                                                             
+gef➤
+#+END_SRC
+
+to run exploit
+#+BEGIN_SRC shell-script
+(python exploit2.py; cat) | ./stack6
+#+END_SRC
+
 ** teufel(pwnable 200)							:rop:
 https://www.youtube.com/watch?v=wDosab_Y4Hs
 

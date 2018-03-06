@@ -1,4 +1,4 @@
-#+title: SECCON2017
+#+title: CTF study memo
 
 * general concepts
 ** ROP(return oriented programming)
@@ -13,6 +13,9 @@ The rise of 64-bit x86 processors brought with it a change to the subroutine cal
 #+BEGIN_QUOTE
 ret命令で終わる命令列の先頭へのジャンプを繰り返すことで、任意の命令列を実行させることができる
 #+END_QUOTE
+
+わかりやすい説明
+https://www.goto.info.waseda.ac.jp/~kiire/bin/rop.php
 
 ** PLT(procedure linkage table)
 https://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/
@@ -213,10 +216,27 @@ vaddr=0x0804a030 paddr=0x00001030 type=SET_32 callme_two
 14 relocations
 gsx@gsx-virtual-machine:~/Projects/ctf-trials/ROP/ROPEmporium/callme32$
 #+END_QUOTE
+
+dataセクション開始
+0x0804a034
+
+** callme
+
 ** tools
 https://github.com/sashs/Ropper
 https://github.com/JonathanSalwan/ROPgadget
+#+BEGIN_SRC shell-script
+pip install capstone==3.0.5rc2
+pip install ropgadget
+#+END_SRC
+
+*** pwntools
 https://github.com/Gallopsled/pwntools
+
+#+BEGIN_SRC shell-script
+pwn template ./program --host localhost --port 1234
+#+END_SRC
+
 
 *** oneliner(python)
 #+BEGIN_SRC shell-script
@@ -474,6 +494,12 @@ Get shell, and execute /flag_x
 http://automatic_door.pwn.seccon.jp/0b503d0caf712352fc200bc5332c4f95/
 * misc. commands and tools
 ** shell script
+
+サーバでバイナリの待ち受け
+#+BEGIN_SRC shell-script
+socat TCP-LISTEN:1234,reuseaddr,fork EXEC:./callme
+#+END_SRC
+
 mainから次の空行までのみ表示する
 #+BEGIN_SRC shell-script
 objdump -M intel -d a.out | sed -n '/<main>:/,/^$/p'

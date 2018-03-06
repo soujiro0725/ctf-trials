@@ -1,0 +1,29 @@
+#+:Sharif CTF
+
+* web10
+* crypto60
+#+BEGIN_QUOTE
+See known_plaintexts.txt:
+There is a single unknown DES key K.
+All plain texts are encrypted under K, resulting in the corresponding cipher text.
+Can you find K?
+flag is SharifCTF{K},
+where K is a 64-bit hexadecimal value, without the 0x prefix. (K includes the parity bits.)
+#+END_QUOTE
+
+* reverse60
+#+BEGIN_QUOTE
+Run the attached file. If you can, you will capture the flag.
+#+END_QUOTE
+
+* misc48
+#+BEGIN_QUOTE
+What is the most important prize she honored?
+The flag is SharifCTF{MD5(lowercase(Prize name))}.
+#+END_QUOTE
+
+
+SharifCTF{537cd12c5f65d15dd11cc5d7f27127a8}
+
+* web60
+' AND '

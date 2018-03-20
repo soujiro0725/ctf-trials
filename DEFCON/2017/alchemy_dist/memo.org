@@ -1,0 +1,39 @@
+#+title: alchemy
+
+* 04b7f46deed1405c91d155e535ddd744176611b0b9f0d28962c6025822d34bf8
+** sub_40d760(0x40d760)
+*** sub_410830(0x410830)
+** sub_40d760(0x40d760)
+*** _fiber_get_stack_top
+*** sub_0x410940(0x410940) ※値をセットしてるっぽい
+** sub_40d760
+*** sub_410830(0x410830) ※何度も呼ばれている
+*** sub_0x410940(0x410940) ※値をセットしてるっぽい
+
+
+* 文字列
+
+
+$ objdump -D -M intel ./$(ls |sed -n 1p) |grep 'cmp    rcx,0x' |awk '{print $7}' |awk '{gsub("rcx,0x", "", $0);print$0}'
+
+"e up the steeplechase and she had the dogl"
+", as far as possible from Dan. He was working"
+"issioned their work. Suneep"
+"m the attic window: by expand"
+"hone ran"
+"ociety, I w"
+"she came back through the lock, strang"
+"l, he was"
+"in the sphere playing it. Sometimes,"
+"lien beauty. Giant lobsters skit"
+"e loser could eat, sleep,"
+"ed a trillion times"
+"n it started up. "But"
+" first-gen ad-hocs that women castmembe"
+"nd I smiled back, full of good feelings now t"
+" IN WRITING OR REQUIRED BY APPLICABLE"
+"long can I dead"
+"across in years.\x00\x00\x00 He starts out at th"
+"lasses out front "
+" told you, back when you had me hanging"
+

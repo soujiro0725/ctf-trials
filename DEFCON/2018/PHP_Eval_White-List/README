@@ -1,0 +1,8 @@
+PHP Eval White-List
+PHP was dangerous, so we've fixed it!
+
+http://c67f8ffd.quals2018.oooverflow.io
+
+Files:
+
+websec_eval_wl.so

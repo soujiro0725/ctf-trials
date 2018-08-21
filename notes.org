@@ -1,13 +1,16 @@
 #+title: CTF study memo
 
-* general concepts
+* DEFCON
+** 2018
+
+* [TODO] general concepts
 ** ROP(return oriented programming)
 
 attack methods in the presense of non-executable memory (W xor X technique) and code signing
 run machine instruction sequences that are already in the machine's memory, called "gadgets"
 
 #+BEGIN_QUOTE
-The rise of 64-bit x86 processors brought with it a change to the subroutine calling convention that required the first argument to a function to be passed in a register instead of on the stack. This meant that an attacker could no longer set up a library function call with desired arguments just by manipulating the call stack via a buffer overrun exploit. 
+The rise of 64-bit x86 processors brought with it a change to the subroutine calling convention that required the first argument to a function to be passed in a register instead of on the stack. This meant that an attacker could no longer set up a library function call with desired arguments just by manipulating the call stack via a buffer overrun exploit.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -66,39 +69,39 @@ then, you get the offset to the command
 
 #+BEGIN_SRC shell-script
 gef➤  info proc map
-process 10659         
+process 10659
 Mapped address spaces:
-                                             
+
         Start Addr   End Addr       Size     Offset objfile
          0x8048000  0x8049000     0x1000        0x0 /home/gsx/Projects/ctf-trials/liveoverflow/stack6/stack6
          0x8049000  0x804a000     0x1000        0x0 /home/gsx/Projects/ctf-trials/liveoverflow/stack6/stack6
-         0x804a000  0x806b000    0x21000        0x0 [heap]                                                           
-        0xb7e08000 0xb7fb8000   0x1b0000        0x0 /lib/i386-linux-gnu/libc-2.23.so                                  
-        0xb7fb8000 0xb7fba000     0x2000   0x1af000 /lib/i386-linux-gnu/libc-2.23.so                                  
-        0xb7fba000 0xb7fbb000     0x1000   0x1b1000 /lib/i386-linux-gnu/libc-2.23.so                                  
-        0xb7fbb000 0xb7fbe000     0x3000        0x0                                                                   
-        0xb7fd6000 0xb7fd8000     0x2000        0x0                                                                   
-        0xb7fd8000 0xb7fda000     0x2000        0x0 [vvar]                                                            
-        0xb7fda000 0xb7fdb000     0x1000        0x0 [vdso]                                                            
-        0xb7fdb000 0xb7ffd000    0x22000        0x0 /lib/i386-linux-gnu/ld-2.23.so                                    
-        0xb7ffd000 0xb7ffe000     0x1000        0x0                                                                   
-        0xb7ffe000 0xb7fff000     0x1000    0x22000 /lib/i386-linux-gnu/ld-2.23.so                                    
-        0xb7fff000 0xb8000000     0x1000    0x23000 /lib/i386-linux-gnu/ld-2.23.so                                    
-        0xbffdf000 0xc0000000    0x21000        0x0 [stack]                                                           
-gef➤  find 0xb7e08000, +99999999, "/bin/sh"                                                                           
-0xb7f639ab                                                                                                            
-warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.                                 
-1 pattern found.                                                                                                      
-gef➤  find 0xb7e08000, +9999999, "/bin/sh"                                                                            
-0xb7f639ab                                                                                                            
-warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.                                 
-1 pattern found.                                                                                                      
-gef➤  x/s 0xb7e08000+15b9abs                                                                                          
-Invalid number "15b9abs".                                                                                             
-gef➤  x/s 0xb7e08000+0x15b9abs                                                                                        
-Invalid number "0x15b9abs".                                                                                           
-gef➤  x/s 0xb7e08000+0x15b9ab                                                                                         
-0xb7f639ab:     "/bin/sh"                                                                                             
+         0x804a000  0x806b000    0x21000        0x0 [heap]
+        0xb7e08000 0xb7fb8000   0x1b0000        0x0 /lib/i386-linux-gnu/libc-2.23.so
+        0xb7fb8000 0xb7fba000     0x2000   0x1af000 /lib/i386-linux-gnu/libc-2.23.so
+        0xb7fba000 0xb7fbb000     0x1000   0x1b1000 /lib/i386-linux-gnu/libc-2.23.so
+        0xb7fbb000 0xb7fbe000     0x3000        0x0
+        0xb7fd6000 0xb7fd8000     0x2000        0x0
+        0xb7fd8000 0xb7fda000     0x2000        0x0 [vvar]
+        0xb7fda000 0xb7fdb000     0x1000        0x0 [vdso]
+        0xb7fdb000 0xb7ffd000    0x22000        0x0 /lib/i386-linux-gnu/ld-2.23.so
+        0xb7ffd000 0xb7ffe000     0x1000        0x0
+        0xb7ffe000 0xb7fff000     0x1000    0x22000 /lib/i386-linux-gnu/ld-2.23.so
+        0xb7fff000 0xb8000000     0x1000    0x23000 /lib/i386-linux-gnu/ld-2.23.so
+        0xbffdf000 0xc0000000    0x21000        0x0 [stack]
+gef➤  find 0xb7e08000, +99999999, "/bin/sh"
+0xb7f639ab
+warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.
+1 pattern found.
+gef➤  find 0xb7e08000, +9999999, "/bin/sh"
+0xb7f639ab
+warning: Unable to access 16000 bytes of target memory at 0xb7fbd733, halting search.
+1 pattern found.
+gef➤  x/s 0xb7e08000+15b9abs
+Invalid number "15b9abs".
+gef➤  x/s 0xb7e08000+0x15b9abs
+Invalid number "0x15b9abs".
+gef➤  x/s 0xb7e08000+0x15b9ab
+0xb7f639ab:     "/bin/sh"
 gef➤
 #+END_SRC
 
@@ -282,7 +285,7 @@ print "SECCON{" + str(f(11011))[:32] + "}"
 -----
 
 ** putchar music
-This one line of C program works on Linux Desktop. What is this movie's title? 
+This one line of C program works on Linux Desktop. What is this movie's title?
 Please answer the flag as SECCON{MOVIES_TITLE}, replace all alphabets with capital letters, and spaces with underscores.
 
 main(t,i,j){unsigned char p[]="###<f_YM\204g_YM\204g_Y_H #<f_YM\204g_YM\204g_Y_H #+-?[WKAMYJ/7 #+-?[WKgH #+-?[WKAMYJ/7hk\206\203tk\\YJAfkkk";for(i=0;t=1;i=(i+1)%(sizeof(p)-1)){double x=pow(1.05946309435931,p[i]/6+13);for(j=1+p[i]%6;t++%(8192/j);)putchar(t>>5|(int)(t*x));}}
@@ -295,7 +298,7 @@ Port : 15285
 
 *** memo
 main.main　という関数が大きく重要そう
-   
+
 ** Qubic Rube
 Please continue to solve Rubic's Cube and read QR code.
 http://qubicrube.pwn.seccon.jp:33654/
@@ -329,7 +332,7 @@ election-9724a8d0a6c9ccb131200ec96752c61c0e6734cd9e1bb7b1958f8c88c0bd78fa.zip(pa
 The root reply the flag to your mail address if you send a mail that subject is "give me flag" to root.
 http://sqlsrf.pwn.seccon.jp/sqlsrf/
 
-** logsearch 
+** logsearch
 
 10/Dec/2017:05:13:24 +0900	GET	/etc/passwd/jservdocs/	404
 10/Dec/2017:05:13:24 +0900	GET	/etc/passwd/test/jsp/declaration/IntegerOverflow.jsp	404
@@ -337,7 +340,7 @@ http://sqlsrf.pwn.seccon.jp/sqlsrf/
 10/Dec/2017:05:13:24 +0900	GET	/components/com_facileforms/facileforms.frame.php?ff_compath=http://cirt.net/rfiinc.txt?	404
 10/Dec/2017:05:13:24 +0900	HEAD	/chris/	404
 10/Dec/2017:05:13:24 +0900	HEAD	/20061114/	404
-10/Dec/2017:05:13:24 +0900	HEAD	/newsite/	404 
+10/Dec/2017:05:13:24 +0900	HEAD	/newsite/	404
 10/Dec/2017:05:13:24 +0900	HEAD	/Fonts/	404
 10/Dec/2017:05:13:24 +0900	HEAD	/cgi-bin/firewall_software.php	404
 10/Dec/2017:05:13:24 +0900	HEAD	/icons/small/banner_top/	404
@@ -512,4 +515,3 @@ $ objdump -M intel -d a.out | grep '^ ' | cut -f2 | perl -pe 's/(\w{2})\s+/\\x\1
 * system calls
 ** x86
 https://blog.packagecloud.io/eng/2016/04/05/the-definitive-guide-to-linux-system-calls/
-
